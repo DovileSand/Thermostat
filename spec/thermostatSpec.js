@@ -68,4 +68,25 @@ describe('Thermostat', function() {
       expect(thermostat.getCurrentTemperature()).toEqual(32);
     });
   });
+
+  describe('displays colour based on energy usage:', function() {
+    it('green if temperature is less than 18', function() {
+      for (var i = 0; i < 3; i++) {thermostat.down();}
+      expect(thermostat.getCurrentTemperature()).toEqual(17);
+      expect(thermostat.energyUsage()).toBe('green');
+    });
+
+    it('yellow if temperature is less than 25 but more than 18', function() {
+      for (var i = 0; i < 4; i++) {thermostat.up();}
+      expect(thermostat.getCurrentTemperature()).toEqual(24);
+      expect(thermostat.energyUsage()).toBe('yellow');
+    });
+
+    it('red if temperature is more than 25', function() {
+      thermostat.switchPowerSavingModeOff();
+      for (var i = 0; i < 6; i++) {thermostat.up();}
+      expect(thermostat.getCurrentTemperature()).toEqual(26);
+      expect(thermostat.energyUsage()).toBe('red');
+    });
+  });
 });
